@@ -20,33 +20,57 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  static List<String> strs;
-
-  @Override
-  public void init() {
-      strs = new ArrayList<>();
-  }
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("comment");
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    List<String> strArray = new ArrayList<String>();
+
+    for (Entity entity : results.asIterable()) {
+      String comment = (String) entity.getProperty("comment");
+      String name = (String) entity.getProperty("name");
+      // It's a pretty bad idea to store data like this...
+      // But it just work now...
+      strArray.add(name);
+      strArray.add(comment);
+    }
+
     Gson gson = new Gson();
-    String json = gson.toJson(strs);
+    String json = gson.toJson(strArray);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = request.getParameter("text-input");
-    if(comment != null) {
-        strs.add(comment);
-    }
+    String comment = getParameter(request, "comment", "");
+    String name = getParameter(request, "name", "anonymous");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Entity commentEntity = new Entity("comment");
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("name", name);
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String key, String defaultVal) {
+      String val = request.getParameter(key);
+      return val == null ? defaultVal : val;
   }
 }

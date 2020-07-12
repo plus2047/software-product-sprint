@@ -71,6 +71,6 @@ public class DataServlet extends HttpServlet {
 
   private String getParameter(HttpServletRequest request, String key, String defaultVal) {
       String val = request.getParameter(key);
-      return val == null ? defaultVal : val;
+      return val == null || val == "" ? defaultVal : val;
   }
 }

@@ -12,9 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-async function getMessage() {
+async function getComments() {
     const response = await fetch('/data');
     const message = await response.json();
     console.log(message);
-    document.getElementById('message').innerText = message.join(" ");
+    var commentField = document.getElementById('comments')
+    for(i = 0; i < message.length; i += 2) {
+        var paragraph = document.createElement("P");
+        var boldField = document.createElement("B");
+        var name = document.createTextNode(message[i] + " said:");
+        var text = document.createTextNode(message[i + 1]);
+        boldField.appendChild(name);
+        paragraph.appendChild(boldField);
+        paragraph.appendChild(document.createElement("BR"))
+        paragraph.appendChild(text);
+        commentField.appendChild(paragraph);
+    }
 }

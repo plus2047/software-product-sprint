@@ -5,12 +5,11 @@
     <meta charset="utf-8" />
     <title>Welcome to Jiahao's portfolio!</title>
     <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
-    <link rel="icon" href="favicon.icon">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="script.js"></script>    
 </head>
 
-<body>
+<body onload="getComments()">
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -68,19 +67,22 @@
 
         <hr>
 
+        <h3> Add comment </h3>
         <form action="/data" method="POST">
-            <p>Add commment</p>
-            <textarea name="comment">Your name</textarea>
+            <label for="name">Your name:</label>
+            <input type="text" id="name" name="name">
             <br/><br/>
-            <textarea name="name">Your commment</textarea>
+
+            <textarea id="comment" name="comment" cols=80 rows=6>Your commment</textarea>
             <br/><br/>
-            <input type="submit" />
+            
+            <input type="submit" class="btn" />
         </form>
 
-        <div id="content">
-            <button onclick="getMessage()">Flash Comments</button>
-            <div id="message"></div>
-        </div>
+        <hr>
+
+        <h3> Comments </h3>
+        <div id="comments"> </div>
 
     </main>
 

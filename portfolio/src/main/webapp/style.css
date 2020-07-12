@@ -3,6 +3,11 @@ body {
     width: 750px;
 }
 
+img {
+    margin: auto;
+    width: 700px;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;

@@ -68,8 +68,14 @@
 
         <hr>
 
+        <form action="/data" method="POST">
+            <p>Add commment</p>
+            <textarea name="text-input">Your commment</textarea>
+            <input type="submit" />
+        </form>
+
         <div id="content">
-            <button onclick="getMessage()">Say Hello</button>
+            <button onclick="getMessage()">Flash Comments</button>
             <div id="message"></div>
         </div>
 

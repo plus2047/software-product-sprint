@@ -31,9 +31,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void init() {
       strs = new ArrayList<>();
-      strs.add("Hello.");
-      strs.add("My Friend.");
-      strs.add("Nice to meet you.");
   }
 
   @Override
@@ -42,5 +39,14 @@ public class DataServlet extends HttpServlet {
     String json = gson.toJson(strs);
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String comment = request.getParameter("text-input");
+    if(comment != null) {
+        strs.add(comment);
+    }
+    response.sendRedirect("/index.html");
   }
 }

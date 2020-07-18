@@ -62,12 +62,15 @@
         <form action="/data" method="POST" id="comment-form" class="hidden" enctype="multipart/form-data">
             <label for="name">Your name:</label>
             <input type="text" id="name" name="name">
-            <input type="file" id="image" name="image">
             <br/><br/>
 
             <textarea id="comment" name="comment" cols=80 rows=6>Your commment</textarea>
             <br/><br/>
             
+            <label for="name">You can upload an image:</label>
+            <input type="file" id="image" name="image">
+            <br/><br/>
+
             <input type="submit" class="btn" />
         </form>
 

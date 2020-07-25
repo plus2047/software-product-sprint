@@ -14,6 +14,8 @@
 
 package com.google.sps;
 
+import java.lang.*;
+
 /**
  * Utility class for creating greeting messages.
  */
@@ -22,6 +24,17 @@ public class Greeter {
    * Returns a greeting for the given name.
    */
   public String greet(String name) {
+    StringBuffer buffer = new StringBuffer();
+    name = name.trim();
+    for(int i = 0; i < name.length(); i++) {
+        int code = name.codePointAt(i);
+        if(Character.isLetterOrDigit(code)) {
+            buffer.appendCodePoint(code);
+        } else if(buffer.length() > 0 && buffer.charAt(buffer.length() - 1) != ' ') {
+            buffer.append(' ');
+        }
+    }
+    name = buffer.toString();
     return "Hello " + name;
   }
 }

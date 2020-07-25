@@ -17,15 +17,40 @@ async function getComments() {
     const message = await response.json();
     console.log(message);
     var commentField = document.getElementById('comments')
-    for(i = 0; i < message.length; i += 2) {
+    for(i = 0; i < message.length; i ++) {
         var paragraph = document.createElement("P");
         var boldField = document.createElement("B");
-        var name = document.createTextNode(message[i] + " said:");
-        var text = document.createTextNode(message[i + 1]);
+        var entity = message[i]
+        var name = document.createTextNode(entity["name"] + " said:");
+        var text = document.createTextNode(entity["comment"]);
         boldField.appendChild(name);
         paragraph.appendChild(boldField);
         paragraph.appendChild(document.createElement("BR"))
         paragraph.appendChild(text);
+        if("image" in entity && entity["image"] != "") {
+            var imageField = document.createElement("IMG")
+            imageField.src = entity["image"]
+            paragraph.appendChild(imageField)
+        }
+        var imageField = document.createElement("IMG")
+
         commentField.appendChild(paragraph);
     }
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+    fetch('/blobstore-upload-url')
+        .then((response) => {
+          return response.text();
+        })
+        .then((imageUploadUrl) => {
+          const messageForm = document.getElementById('comment-form');
+          messageForm.action = imageUploadUrl;
+          messageForm.classList.remove('hidden');
+        });
+}
+
+function init() {
+    getComments()
+    fetchBlobstoreUrlAndShowForm()
 }

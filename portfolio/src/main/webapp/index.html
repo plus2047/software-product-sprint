@@ -9,7 +9,7 @@
     <script src="script.js"></script>    
 </head>
 
-<body onload="getComments()">
+<body onload="init()">
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -56,19 +56,10 @@
             <li> <a href="https://github.com/plus2047/ITPC"> My persional programming contest template </a> </li>
         </ul>
 
-        <p>
-            And I shared some other pictures with you!
-        </p>
-
-        <ul>
-            <li><a href="anime.html">My Favorite Animes</a></li>
-            <li><a href="travel.html">Position</a></li>
-        </ul>
-
         <hr>
 
         <h3> Add comment </h3>
-        <form action="/data" method="POST">
+        <form action="/data" method="POST" id="comment-form" class="hidden" enctype="multipart/form-data">
             <label for="name">Your name:</label>
             <input type="text" id="name" name="name">
             <br/><br/>
@@ -76,6 +67,10 @@
             <textarea id="comment" name="comment" cols=80 rows=6>Your commment</textarea>
             <br/><br/>
             
+            <label for="name">You can upload an image:</label>
+            <input type="file" id="image" name="image">
+            <br/><br/>
+
             <input type="submit" class="btn" />
         </form>
 
